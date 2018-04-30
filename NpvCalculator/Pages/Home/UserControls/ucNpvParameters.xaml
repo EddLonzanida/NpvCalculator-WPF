@@ -1,0 +1,40 @@
+﻿<UserControl x:Class="NpvCalculator.Pages.Home.UserControls.ucNpvParameters"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:NpvCalculator.Pages.Home"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             mc:Ignorable="d" 
+             d:DesignHeight="250" d:DesignWidth="300">
+    <UserControl.Resources>
+        <Style TargetType="{x:Type TextBox}">
+            <Setter Property="Margin" Value="0,4,0,12" />
+            <Setter Property="Height" Value="25" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+        </Style>
+        <!--<Style TargetType="{x:Type TextBlock}">
+            <Setter Property="Margin" Value="0,0,0,40" />
+        </Style>-->
+    </UserControl.Resources>
+    <StackPanel DataContext="{Binding}">
+        <TextBlock Text="Initial Investment" Style="{StaticResource Emphasis}" />
+        <TextBox Text="{Binding InitialInvestment, StringFormat=\{0:N2\}}"/>
+        <TextBlock Text="Lower Bound Discount Rate %" Style="{StaticResource Emphasis}" />
+        <TextBox Text="{Binding LowerBoundDiscountRate, Converter={StaticResource PercentConverter}}" />
+        <TextBlock Text="Upper Bound Discount Rate %" Style="{StaticResource Emphasis}" />
+        <TextBox Text="{Binding UpperBoundDiscountRate, Converter={StaticResource PercentConverter}}"/>
+        <TextBlock Text="Discount Rate Increment %" Style="{StaticResource Emphasis}" />
+        <TextBox Text="{Binding DiscountRateIncrement, Converter={StaticResource PercentConverter}}"/>
+        <TextBlock Text="Project Life (years)" Style="{StaticResource Emphasis}" />
+        <TextBox Text="{Binding ProjectLife, FallbackValue=''}">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="TextChanged">
+                    <i:InvokeCommandAction Command="{Binding Path=DataContext.SetCashFlowsCommand, RelativeSource={RelativeSource FindAncestor, 
+                                        AncestorType={x:Type local:Home}}}" 
+                                       CommandParameter="{Binding Text, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TextBox}}}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </TextBox>
+    </StackPanel>
+</UserControl>
