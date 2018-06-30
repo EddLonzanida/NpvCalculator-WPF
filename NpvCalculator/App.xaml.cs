@@ -19,7 +19,6 @@ namespace NpvCalculator
         {
             var container = classFactory.Container;
 
-            classFactory = null;
             container.Dispose();
 
             base.OnExit(e);
